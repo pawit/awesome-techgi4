@@ -1,0 +1,41 @@
+Maximilian Bachl 341455 Theorieabgabe
+
+Aufgabe 2:
+
+* Propagation delay: Das Propagation delay ist die Zeit, die es braucht, damit ein Signal vom Absender zum Empfänger übertragen wird. Man kann es berechnen, indem man die Länge der Leitung durch die Übertragungsgeschwindigkeit dividiert.
+
+* Transmission delay: Das Transmission delay kann man berechnen, indem man die Anzahl der zu übertragenden Bits durch die Übertragungsrate teilt. Es steht also dafür, dass es eine gewisse Zeit benötigt, um die Daten durch die Leitung zu bekommen.
+
+* Processing delay: Hierbei handelt es sich um die Verzögerung, die ein Router benötigt, um die Paketheader zu lesen und das Paket an die richtig Adresse, mit einem neuen Header, weiterzuleiten.
+
+* Queueing delay: Das ist die Zeitspanne, die ein Paket in einer Warteschlange im Router wartet, bis es weiterverarbeitet werden kann.
+
+Aufgabe 3:
+
+a) (10000 bits) / (100000000 bits/s) = 0.0001 s
+
+b) Das erste Bit kommt nach
+
+    200 km / (200000 km/s) = (200/200000) s = 0.001 s
+
+  an. Das letzte nach
+
+    0.0001 s + 0.001 s = 0.0011 s
+
+c) t1: Erstes Feld. t2: Vor der Hälfte. t3: genau vorm Ende. t4: hinter dem Ende.
+
+d) Ein Paket ist 0.0001 s Sekunden lang, die Übertragung im Kabel dauert 0.001 s. Teilt man also die Werte erhält man, dass genau 10 Pakete gleichzeitig in der Leitung sein können.
+
+e) 10 Mbps: 0.001 s für die Übertragung des Pakets, und 0.001 s für die Ausbreitung, wie wir vorher ausgerechnet. Also kommen wir auf 0.002 s.
+
+Für 20000km und 10 Mbps: Das Propagation delay ist jetzt 0.1 s. Bei 10 Mbps dauert die Übertragung 0.001 s und somit ist das letzte Bit nach 0.101 s am anderen Ende.
+
+Für 20000km und 100 Mbps: Das Propagation delay ist jetzt 0.001 s. Bei 100 Mbps dauert die Übertragung 0.0001 s und somit ist das letzte Bit nach 0.1001 s am anderen Ende.
+
+Aufgabe 4: Das Problem liegt auf der physikalischen Ebene, weil über WLAN mit derzeitigen Technologien nicht genug Bits für alle Teilnehmer übertragen werden können.
+
+Aufgabe 5: 5.7 ms = 0.0057 s, Geschwindigkeit = 200000 km/s.
+    Somit ist der Abstand 200000 km/s*0.0057s / 2 = 570 km. Der Rechner von Google liegt also in Europa.
+
+    2.3 ms = 0.0023 s, Geschwindigkeit = 200000 km/s.
+    Somit ist der Abstand 200000 km/s*0.0023s / 2 = 230 km. Der Rechner von Google liegt also in Nordamerika.
