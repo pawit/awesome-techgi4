@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     a = atoi(argv[3]);
     b = atoi(argv[4]);    
 
-    //Resolv hostname to IP Address
+    // Resolve hostname to IP Address
     if ((he=gethostbyname(argv[1])) == NULL) {  // get the host info
         herror("gethostbyname");
         exit(1);
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     /* ******************************************************************
     TO BE DONE: Create socket
     ******************************************************************* */
-
+    sockfd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 
     //setup transport address
     their_addr.sin_family = AF_INET;     
@@ -62,6 +62,12 @@ int main(int argc, char *argv[])
     /* ******************************************************************
     TO BE DONE:  Binding
     ******************************************************************* */
+    if (-1 == connect(sockfd, (struct sockaddr *) &their_addr, sizeof(their_addr))) {
+        perror("connection failed");
+        close(sockfd);
+        exit(EXIT_FAILURE);
+    }
+    
     
     unsigned char buffer[4];
 
@@ -70,11 +76,21 @@ int main(int argc, char *argv[])
     /* ******************************************************************
     TO BE DONE:  Send data
     ******************************************************************* */
+    int i = 0;
+    for (i = 0; i < 10000; i++) {
+        if (-1 == write(sockfd, buffer, 4)) {
+            perror("sending data failed");
+            close(sockfd);
+            exit(EXIT_FAILURE);
+        }
+    }
 
     /* ******************************************************************
     TO BE DONE:  Close socket
     ******************************************************************* */
-
+    close(sockfd);
+    // printf("GCD von %d und %d ist: %d\n", a, b, (int) *buffer);
+    
     return 0;
 }
 
@@ -82,4 +98,10 @@ int packData(unsigned char *buffer, unsigned int a, unsigned int b) {
     /* ******************************************************************
     TO BE DONE:  pack data
     ******************************************************************* */
+    buffer[1] = (unsigned char) (255 & a);
+    buffer[0] = (unsigned char) (((255 << 8) & a) >> 8);
+    buffer[3] = (unsigned char) (255 & b);
+    buffer[2] = (unsigned char) (((255 << 8) & b) >> 8);
+    printf("SENDING: %d, %d, %d, %d \n", buffer[0], buffer[1], buffer[2], buffer[3]);
+    return 0;
 }
