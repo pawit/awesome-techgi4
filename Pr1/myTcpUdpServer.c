@@ -87,7 +87,6 @@ int main(int argc, char *argv[])
             fprintf(stderr, "%s\n", strerror(errno));
             exit(EXIT_FAILURE);
         }
-        sleep(1);
         unsigned int a,b;
         unpackData(buffer, &a, &b);
         printf("GCD of %d, %d: %d\n", a, b, gcd(a,b));

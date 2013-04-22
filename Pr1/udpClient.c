@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     TO BE DONE:  Send data
     ******************************************************************* */
     int i = 0;
-    for (i = 0; i < 10000; i++) {
+    for (i = 0; i < 1; i++) {
         if (-1 == sendto(sockfd, buffer, 4, 0, (struct sockaddr*) &their_addr, sizeof their_addr)) {
             perror("sending data failed");
             close(sockfd);

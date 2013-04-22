@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     TO BE DONE:  Send data
     ******************************************************************* */
     int i = 0;
-    for (i = 0; i < 10000; i++) {
+    for (i = 0; i < 1; i++) {
         if (-1 == write(sockfd, buffer, 4)) {
             perror("sending data failed");
             close(sockfd);
