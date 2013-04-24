@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
     memset(&my_udp_addr, 0, sizeof (my_udp_addr));
     memset(&my_tcp_addr, 0, sizeof (my_tcp_addr));
 
-
+    // Boilerplate code. You have to do it all the time.
     my_udp_addr.sin_family = AF_INET;
     my_udp_addr.sin_port = htons(udpPort);
     my_udp_addr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -120,17 +120,19 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
+
     unsigned int a,b;
     for (;;) {
         /* clear the fd-set that will hold all our socktes, and then add the sockets */
         FD_ZERO(&readfds);
+        // Add the sockets to the set of file descriptors for select()
         FD_SET(socktcp, &readfds);
         FD_SET(sockudp, &readfds);
         /* select will take a int parameter, which has to be the highest of all I/O-sockets+1, maybe it will create one */
         int fd_max = max(sockudp, socktcp) + 1;
         /* select blocks as long as nothing happns */
         select(fd_max, &readfds, NULL, NULL, NULL);
-        /* select isn't blocking, something happened, check all sockets if they were the cause */
+        /* select unblocked, so something happened, check all sockets if they were the cause */
         if (FD_ISSET(sockudp, &readfds)) {
             recsize = recvfrom(sockudp, (void *)buffer, sizeof (buffer), 0, (struct sockaddr *)&my_udp_addr, &fromlen);
             if (recsize < 0) {
