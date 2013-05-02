@@ -1,0 +1,71 @@
+<?xml version="1.0" ?>
+<project default="help">
+
+<property environment="env"/>
+	<property name="lib-dir" value="lib" />
+	<property name="classes-dir" value="bin" />
+	<property name="jaxws-lib-dir" value="${user.home}/2013/mylibs"/>
+        
+        <property name="source" value="1.6"/>
+        <property name="target" value="1.6"/>
+
+	<path id="classpath">
+		<pathelement location="${classes-dir}" />
+		<fileset dir="${lib-dir}">
+			<include name="**/*.jar" />
+		</fileset>
+                <fileset dir="${jaxws-lib-dir}">
+                    <include name="**/*.jar"/>
+                </fileset>
+	</path>
+
+
+	<target name="help">
+		<echo>Usage: ant [target]</echo>
+		<echo>
+		</echo>
+		<echo> These are the targets:</echo>
+		<echo> clean</echo>
+		<echo> compile</echo>
+		<echo> mywsgen</echo>
+		<echo> run</echo>
+		<echo>
+		</echo>
+	</target>
+
+	<target name="clean">
+		<delete dir="${classes-dir}" />
+	</target>
+
+
+	<target name="compile" description="Compilation target">
+		<mkdir dir="${classes-dir}" />
+		<javac srcdir="src" 
+		destdir="${classes-dir}" 
+		classpathref="classpath" 
+		source="${source}" 
+		target="${target}" 
+		fork="yes"/> 
+	</target>
+
+
+	<target name="mywsgen" depends="compile">
+		<taskdef name="wsgen" classname="com.sun.tools.ws.ant.WsGen">
+			<classpath refid="classpath"/>
+		</taskdef>
+		
+		<wsgen debug="true" keep="true" destdir="bin" resourcedestdir="bin" sei="wstest1.CircleFunctions">
+			<classpath refid="classpath">
+			</classpath>
+		</wsgen>
+		
+	</target>
+
+
+	<target name="run">
+		<java classname="wstest1/CircleFunctions" classpathref="classpath" failonerror="true" fork="true">
+		</java>
+	</target>
+
+
+</project>
