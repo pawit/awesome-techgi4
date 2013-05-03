@@ -1,0 +1,1958 @@
+<?xml version="1.0"?>
+
+<definitions name="GW" targetNamespace="urn:gw"
+ xmlns="http://schemas.xmlsoap.org/wsdl/"
+ xmlns:gw="urn:gw"
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema"
+     targetNamespace="urn:gw">
+
+      <xsd:complexType name="GW__attributesList_Result">
+        <xsd:all>
+          <xsd:element name="appId" type="xsd:string"/>
+          <xsd:element name="attributes" type="gw:GW__AttributeList"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__rpcList_Result">
+        <xsd:all>
+          <xsd:element name="appId" type="xsd:string"/>
+          <xsd:element name="rpcs" type="gw:GW__RpcList"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__eventsList_Result">
+        <xsd:all>
+          <xsd:element name="appId" type="xsd:string"/>
+          <xsd:element name="events" type="gw:GW__EventList"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__eventsRead_Result">
+        <xsd:all>
+          <xsd:element name="offset" type="xsd:unsignedInt"/>
+          <xsd:element name="total" type="xsd:unsignedInt"/>
+          <xsd:element name="results" type="gw:GW__Event_Results"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__eventsReadRelative_Result">
+        <xsd:all>
+          <xsd:element name="reqId" type="xsd:string"/>
+          <xsd:element name="offset" type="xsd:unsignedInt"/>
+          <xsd:element name="total" type="xsd:unsignedInt"/>
+          <xsd:element name="results" type="gw:GW__Event_Results"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__eventsReadLast_Result">
+        <xsd:all>
+          <xsd:element name="results" type="gw:GW__Event_Results"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__gwGetStatus_Result">
+        <xsd:all>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="gwId" type="xsd:string"/>
+          <xsd:element name="load1" type="xsd:double"/>
+          <xsd:element name="load5" type="xsd:double"/>
+          <xsd:element name="load15" type="xsd:double"/>
+          <xsd:element name="uptime" type="xsd:int"/>
+          <xsd:element name="build" type="xsd:string"/>
+          <xsd:element name="eventsSize" type="xsd:unsignedLong"/>
+          <xsd:element name="moteStatsSize" type="xsd:unsignedLong"/>
+          <xsd:element name="eventsArchiveSize" type="xsd:unsignedLong"/>
+          <xsd:element name="moteStatsArchiveSize" type="xsd:unsignedLong"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__statsReadMoteStats_Result">
+        <xsd:all>
+          <xsd:element name="offset" type="xsd:unsignedInt"/>
+          <xsd:element name="total" type="xsd:unsignedInt"/>
+          <xsd:element name="results" type="gw:GW__MoteStat_Results"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__statsReadMoteStatsRelative_Result">
+        <xsd:all>
+          <xsd:element name="reqId" type="xsd:string"/>
+          <xsd:element name="offset" type="xsd:unsignedInt"/>
+          <xsd:element name="total" type="xsd:unsignedInt"/>
+          <xsd:element name="results" type="gw:GW__MoteStat_Results"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__AttributeListEntry">
+        <xsd:all>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="typeName" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__AttributeList">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__AttributeListEntry[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__Attribute">
+        <xsd:all>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="SerialSettings" type="gw:nx_uart_settings_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="ADC1Config" type="gw:nx_adc_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="HumidityConfig" type="gw:nx_read_threshold_uint16_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="IO0Config" type="gw:nx_pin_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="IO1Config" type="gw:nx_pin_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="IO2Config" type="gw:nx_pin_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="LightPARConfig" type="gw:nx_read_threshold_uint16_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="LightTSRConfig" type="gw:nx_read_threshold_uint16_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="SamplePeriod" type="xsd:unsignedInt" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="MgmtConfig" type="gw:nx_mgmt_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="TemperatureConfig" type="gw:nx_read_threshold_uint16_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="ADC2Config" type="gw:nx_adc_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="ADC0Config" type="gw:nx_adc_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="ADC3Config" type="gw:nx_adc_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="SwitchConfig" type="gw:nx_pin_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="HeartbeatPeriod" type="xsd:unsignedInt" minOccurs="0" maxOccurs="1"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__Attribute_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+	  <xsd:element name="error" type="xsd:int"/>
+          <xsd:element name="value" type="gw:GW__Attribute"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__Attribute_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__Attribute_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__RpcListEntry">
+        <xsd:all>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="parameters" type="gw:GW__RpcParameterList"/>
+          <xsd:element name="returnType" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__RpcList">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__RpcListEntry[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__RpcParameterListEntry">
+        <xsd:all>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="typeName" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__RpcParameterList">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__RpcParameterListEntry[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__EventListEntry">
+        <xsd:all>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="typeName" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__EventList">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__EventListEntry[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__Event">
+        <xsd:all>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="ConnectivityTestReceiverReport" type="gw:nx_connectivity_report_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="ConnectivityTestSenderReport" type="gw:nx_connectivity_sender_report_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="IdentEvent" type="gw:nx_ident_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="NodeStatsEvent" type="gw:nx_node_stats_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="RoutingParentsEvent" type="gw:nx_routing_parents_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="ADC0ReadEvent" type="xsd:unsignedShort" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="ADC1ReadEvent" type="xsd:unsignedShort" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="HumidityReadEvent" type="xsd:unsignedShort" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="IO0ReadEvent" type="xsd:unsignedShort" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="IO1ReadEvent" type="xsd:unsignedShort" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="IO2ReadEvent" type="xsd:unsignedShort" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="LightPARReadEvent" type="xsd:unsignedShort" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="LightTSRReadEvent" type="xsd:unsignedShort" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="SwitchReadEvent" type="xsd:unsignedShort" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="TemperatureReadEvent" type="xsd:unsignedShort" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="ADC2ReadEvent" type="xsd:unsignedShort" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="ADC3ReadEvent" type="xsd:unsignedShort" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="HeartbeatPeriod" type="xsd:unsignedInt" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="MgmtConfig" type="gw:nx_mgmt_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="ADC0Config" type="gw:nx_adc_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="ADC1Config" type="gw:nx_adc_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="HumidityConfig" type="gw:nx_read_threshold_uint16_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="IO0Config" type="gw:nx_pin_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="IO1Config" type="gw:nx_pin_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="IO2Config" type="gw:nx_pin_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="LightPARConfig" type="gw:nx_read_threshold_uint16_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="LightTSRConfig" type="gw:nx_read_threshold_uint16_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="SamplePeriod" type="xsd:unsignedInt" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="SwitchConfig" type="gw:nx_pin_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="TemperatureConfig" type="gw:nx_read_threshold_uint16_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="ADC2Config" type="gw:nx_adc_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="ADC3Config" type="gw:nx_adc_config_t" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="SerialSettings" type="gw:nx_uart_settings_t" minOccurs="0" maxOccurs="1"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__Event_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="seqNo" type="xsd:unsignedInt"/>
+          <xsd:element name="value" type="gw:GW__Event"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__Event_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__Event_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__MetaData_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="value" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__MetaData_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__MetaData_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__ConfigOptionListEntry">
+        <xsd:all>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="value" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__ConfigOptionList">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__ConfigOptionListEntry[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__MoteStatsListEntry">
+        <xsd:all>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="typeName" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__MoteStatsList">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__MoteStatsListEntry[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__MoteStat_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="name" type="xsd:string"/>
+          <xsd:element name="value" type="xsd:long"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__MoteStat_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__MoteStat_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__AddrCache_Result">
+        <xsd:all>
+          <xsd:element name="shortAddr" type="xsd:unsignedShort"/>
+          <xsd:element name="longAddr" type="xsd:string"/>
+          <xsd:element name="isBase" type="xsd:boolean"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__AddrCache_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__AddrCache_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__PingBridge_Result">
+        <xsd:all>
+          <xsd:element name="routerAddr" type="xsd:string"/>
+          <xsd:element name="seqNo" type="xsd:int"/>
+          <xsd:element name="longAddr" type="xsd:string"/>
+          <xsd:element name="revision" type="xsd:unsignedShort"/>
+          <xsd:element name="linkAddress" type="xsd:unsignedInt"/>
+          <xsd:element name="linkMtu" type="xsd:unsignedByte"/>
+          <xsd:element name="radioChannel" type="xsd:unsignedByte"/>
+          <xsd:element name="radioPower" type="xsd:unsignedByte"/>
+          <xsd:element name="groupId" type="xsd:unsignedShort"/>
+          <xsd:element name="lowPower154ChirpPeriod" type="xsd:unsignedInt"/>
+          <xsd:element name="securityMode" type="xsd:unsignedInt"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__PingBridge_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__PingBridge_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__PingNode_Result">
+        <xsd:all>
+          <xsd:element name="shortAddr" type="xsd:unsignedShort"/>
+          <xsd:element name="longAddr" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__PingNode_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__PingNode_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__TraceRoute_Result">
+        <xsd:all>
+          <xsd:element name="shortAddr" type="xsd:unsignedShort"/>
+          <xsd:element name="longAddr" type="xsd:string"/>
+          <xsd:element name="delay" type="xsd:double"/>
+          <xsd:element name="hopCount" type="xsd:int"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__TraceRoute_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__TraceRoute_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__RebuildTree_Result">
+        <xsd:all>
+          <xsd:element name="routerAddr" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__RebuildTree_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__RebuildTree_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__DiscoverNodes_Result">
+        <xsd:all>
+          <xsd:element name="routerAddr" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__DiscoverNodes_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__DiscoverNodes_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__ListRouters_Result">
+        <xsd:all>
+          <xsd:element name="routerAddr" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__ListRouters_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__ListRouters_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__ArchiveList_Result">
+        <xsd:all>
+          <xsd:element name="archiveType" type="xsd:string"/>
+          <xsd:element name="archiveDate" type="xsd:date"/>
+          <xsd:element name="archiveSize" type="xsd:unsignedLong"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__ArchiveList_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__ArchiveList_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__InetDump_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="ipv4Addr" type="xsd:string"/>
+          <xsd:element name="ipv4Host" type="xsd:string"/>
+          <xsd:element name="ipv6Addr" type="xsd:string"/>
+          <xsd:element name="ipv6Host" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__InetDump_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__InetDump_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__InetConfig_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="ipv4Addr" type="xsd:string"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="GW__InetConfig_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:GW__InetConfig_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="void_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="void_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:void_Result[]"/>
+            </xsd:restriction>
+          </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="int_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="value" type="xsd:int"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="int_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType"
+             wsdl:arrayType="gw:int_Result[]"/>
+            </xsd:restriction>
+          </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_adc_config_t">
+        <xsd:all>
+          <xsd:element name="enabled" type="xsd:unsignedByte"/>
+          <xsd:element name="sample" type="xsd:unsignedByte"/>
+          <xsd:element name="power" type="xsd:unsignedByte"/>
+          <xsd:element name="ref" type="xsd:unsignedByte"/>
+          <xsd:element name="warmup" type="xsd:unsignedShort"/>
+          <xsd:element name="resistance" type="xsd:unsignedByte"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_read_threshold_uint16_config_t">
+        <xsd:all>
+          <xsd:element name="enabled" type="xsd:unsignedByte"/>
+          <xsd:element name="sample" type="xsd:unsignedByte"/>
+          <xsd:element name="upperEnabled" type="xsd:unsignedByte"/>
+          <xsd:element name="lowerEnabled" type="xsd:unsignedByte"/>
+          <xsd:element name="upper" type="xsd:unsignedShort"/>
+          <xsd:element name="lower" type="xsd:unsignedShort"/>
+          <xsd:element name="outside" type="xsd:unsignedByte"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_pin_config_t">
+        <xsd:all>
+          <xsd:element name="enabled" type="xsd:unsignedByte"/>
+          <xsd:element name="sample" type="xsd:unsignedByte"/>
+          <xsd:element name="output" type="xsd:unsignedByte"/>
+          <xsd:element name="interrupt" type="xsd:unsignedByte"/>
+          <xsd:element name="pulseWidth" type="xsd:unsignedByte"/>
+          <xsd:element name="pulseFalling" type="xsd:unsignedByte"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_mgmt_config_t">
+        <xsd:all>
+          <xsd:element name="identEnabled" type="xsd:unsignedByte"/>
+          <xsd:element name="ledsEnabled" type="xsd:unsignedByte"/>
+          <xsd:element name="blinkOnSend" type="xsd:unsignedByte"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_connectivity_report_t">
+        <xsd:all>
+          <xsd:element name="runId" type="xsd:unsignedShort"/>
+          <xsd:element name="testId" type="xsd:unsignedShort"/>
+          <xsd:element name="channel" type="xsd:unsignedByte"/>
+          <xsd:element name="rfpower" type="xsd:unsignedByte"/>
+          <xsd:element name="source" type="xsd:unsignedShort"/>
+          <xsd:element name="destination" type="xsd:unsignedShort"/>
+          <xsd:element name="totalPackets" type="xsd:unsignedShort"/>
+          <xsd:element name="packetsReceived" type="xsd:unsignedShort"/>
+          <xsd:element name="packetsMissed" type="xsd:unsignedShort"/>
+          <xsd:element name="timedOut" type="xsd:unsignedByte"/>
+          <xsd:element name="minRssi" type="xsd:byte"/>
+          <xsd:element name="meanRssi" type="xsd:byte"/>
+          <xsd:element name="maxRssi" type="xsd:byte"/>
+          <xsd:element name="minLqi" type="xsd:unsignedByte"/>
+          <xsd:element name="meanLqi" type="xsd:unsignedByte"/>
+          <xsd:element name="maxLqi" type="xsd:unsignedByte"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_node_stats_t">
+        <xsd:all>
+          <xsd:element name="uptime" type="xsd:unsignedInt"/>
+          <xsd:element name="mcu_active_time" type="xsd:unsignedInt"/>
+          <xsd:element name="radio_active_time" type="xsd:unsignedInt"/>
+          <xsd:element name="voltage" type="xsd:unsignedShort"/>
+          <xsd:element name="watchdog_resets" type="xsd:unsignedShort"/>
+          <xsd:element name="link_sent_preambles" type="xsd:unsignedShort"/>
+          <xsd:element name="link_sent" type="xsd:unsignedShort"/>
+          <xsd:element name="link_received" type="xsd:unsignedShort"/>
+          <xsd:element name="link_overheard" type="xsd:unsignedShort"/>
+          <xsd:element name="link_energy_detections" type="xsd:unsignedShort"/>
+          <xsd:element name="net_sent" type="xsd:unsignedShort"/>
+          <xsd:element name="net_missed" type="xsd:unsignedShort"/>
+          <xsd:element name="net_delivered" type="xsd:unsignedShort"/>
+          <xsd:element name="net_fwd_overflowed" type="xsd:unsignedShort"/>
+          <xsd:element name="svc_overflowed" type="xsd:unsignedShort"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_routing_parents_t">
+        <xsd:all>
+          <xsd:element name="parentCount" type="xsd:unsignedByte"/>
+          <xsd:element name="parent0" type="xsd:unsignedShort"/>
+          <xsd:element name="parentCorrelation0" type="xsd:unsignedByte"/>
+          <xsd:element name="parentRssi0" type="xsd:byte"/>
+          <xsd:element name="parentHops0" type="xsd:unsignedByte"/>
+          <xsd:element name="parentLinkCost0" type="xsd:unsignedByte"/>
+          <xsd:element name="parentCost0" type="xsd:unsignedShort"/>
+          <xsd:element name="parent1" type="xsd:unsignedShort"/>
+          <xsd:element name="parentCorrelation1" type="xsd:unsignedByte"/>
+          <xsd:element name="parentRssi1" type="xsd:byte"/>
+          <xsd:element name="parentHops1" type="xsd:unsignedByte"/>
+          <xsd:element name="parentLinkCost1" type="xsd:unsignedByte"/>
+          <xsd:element name="parentCost1" type="xsd:unsignedShort"/>
+          <xsd:element name="parent2" type="xsd:unsignedShort"/>
+          <xsd:element name="parentCorrelation2" type="xsd:unsignedByte"/>
+          <xsd:element name="parentRssi2" type="xsd:byte"/>
+          <xsd:element name="parentHops2" type="xsd:unsignedByte"/>
+          <xsd:element name="parentLinkCost2" type="xsd:unsignedByte"/>
+          <xsd:element name="parentCost2" type="xsd:unsignedShort"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_uart_settings_t">
+        <xsd:all>
+          <xsd:element name="speed" type="xsd:unsignedInt"/>
+          <xsd:element name="bits" type="xsd:unsignedByte"/>
+          <xsd:element name="parity" type="xsd:unsignedByte"/>
+          <xsd:element name="stopbits" type="xsd:unsignedByte"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_ident_t">
+        <xsd:all>
+          <xsd:element name="eui64" type="gw:unsigned_char_Array"/>
+          <xsd:element name="short_addr" type="xsd:unsignedShort"/>
+          <xsd:element name="uuid" type="gw:unsigned_char_Array"/>
+          <xsd:element name="product_id" type="xsd:unsignedShort"/>
+          <xsd:element name="version" type="xsd:unsignedShort"/>
+          <xsd:element name="version_major" type="xsd:unsignedShort"/>
+          <xsd:element name="version_minor" type="xsd:unsignedShort"/>
+          <xsd:element name="revision" type="xsd:unsignedShort"/>
+          <xsd:element name="swid" type="gw:unsigned_char_Array"/>
+          <xsd:element name="build_time" type="xsd:unsignedInt"/>
+          <xsd:element name="manually_sent" type="xsd:unsignedByte"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="unsigned_char_Array">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:unsignedByte[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_connectivity_sender_report_t">
+        <xsd:all>
+          <xsd:element name="runId" type="xsd:unsignedShort"/>
+          <xsd:element name="testId" type="xsd:unsignedShort"/>
+          <xsd:element name="channel" type="xsd:unsignedByte"/>
+          <xsd:element name="rfpower" type="xsd:unsignedByte"/>
+          <xsd:element name="source" type="xsd:unsignedShort"/>
+          <xsd:element name="destination" type="xsd:unsignedShort"/>
+          <xsd:element name="totalPackets" type="xsd:unsignedShort"/>
+          <xsd:element name="acksReceived" type="xsd:unsignedShort"/>
+          <xsd:element name="acksMissed" type="xsd:unsignedShort"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_adc_config_t_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="value" type="gw:nx_adc_config_t"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_adc_config_t_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="gw:nx_adc_config_t_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_read_threshold_uint16_config_t_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="value" type="gw:nx_read_threshold_uint16_config_t"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_read_threshold_uint16_config_t_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="gw:nx_read_threshold_uint16_config_t_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_pin_config_t_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="value" type="gw:nx_pin_config_t"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_pin_config_t_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="gw:nx_pin_config_t_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_mgmt_config_t_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="value" type="gw:nx_mgmt_config_t"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_mgmt_config_t_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="gw:nx_mgmt_config_t_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_error_t_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="value" type="xsd:unsignedByte"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_error_t_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="gw:nx_error_t_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_uint16_t_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="value" type="xsd:unsignedShort"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_uint16_t_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="gw:nx_uint16_t_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_connectivity_report_t_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="value" type="gw:nx_connectivity_report_t"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_connectivity_report_t_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="gw:nx_connectivity_report_t_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_node_stats_t_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="value" type="gw:nx_node_stats_t"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_node_stats_t_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="gw:nx_node_stats_t_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_uint32_t_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="value" type="xsd:unsignedInt"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_uint32_t_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="gw:nx_uint32_t_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_routing_parents_t_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="value" type="gw:nx_routing_parents_t"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_routing_parents_t_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="gw:nx_routing_parents_t_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_uart_settings_t_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="value" type="gw:nx_uart_settings_t"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_uart_settings_t_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="gw:nx_uart_settings_t_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_ident_t_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="value" type="gw:nx_ident_t"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_ident_t_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="gw:nx_ident_t_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_connectivity_sender_report_t_Result">
+        <xsd:all>
+          <xsd:element name="addr" type="xsd:string"/>
+          <xsd:element name="timestamp" type="xsd:double"/>
+          <xsd:element name="value" type="gw:nx_connectivity_sender_report_t"/>
+        </xsd:all>
+      </xsd:complexType>
+
+      <xsd:complexType name="nx_connectivity_sender_report_t_Results">
+        <xsd:complexContent>
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute ref="soapenc:arrayType" wsdl:arrayType="gw:nx_connectivity_sender_report_t_Result[]"/>
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+
+    </xsd:schema>
+  </types>
+
+  <message name="programmingDevProgramRequest">
+    <part name="binary" type="xsd:string"/>
+    <part name="platform" type="xsd:string"/>
+    <part name="shortAddr" type="xsd:unsignedShort"/>
+    <part name="channel" type="xsd:int"/>
+    <part name="panid" type="xsd:int"/>
+    <part name="securityMode" type="xsd:string"/>
+    <part name="key" type="xsd:string"/>
+    <part name="timeout" type="xsd:double"/>
+  </message>
+  <message name="programmingDevProgramResponse">
+  </message>
+
+  <message name="attributesListRequest">
+  </message>
+  <message name="attributesListResponse">
+    <part name="return" type="gw:GW__attributesList_Result"/>
+  </message>
+
+  <message name="attributesGetRequest">
+    <part name="name" type="xsd:string"/>
+    <part name="addr" type="xsd:string"/>
+    <part name="timeout" type="xsd:double"/>
+  </message>
+  <message name="attributesGetResponse">
+    <part name="return" type="gw:GW__Attribute_Results"/>
+  </message>
+
+  <message name="attributesSetRequest">
+    <part name="name" type="xsd:string"/>
+    <part name="addr" type="xsd:string"/>
+    <part name="timeout" type="xsd:double"/>
+    <part name="value" type="gw:GW__Attribute"/>
+  </message>
+  <message name="attributesSetResponse">
+    <part name="return" type="gw:GW__Attribute_Results"/>
+  </message>
+
+  <message name="rpcListRequest">
+  </message>
+  <message name="rpcListResponse">
+    <part name="return" type="gw:GW__rpcList_Result"/>
+  </message>
+
+  <message name="rpcExecutegetOutputValueRequest">
+    <part name="addr" type="xsd:string"/>
+    <part name="timeout" type="xsd:double"/>
+    <part name="arg_port" type="xsd:unsignedByte"/>
+  </message>
+  <message name="rpcExecutegetOutputValueResponse">
+    <part name="return" type="gw:void_Results"/>
+  </message>
+
+  <message name="rpcExecuteenableInternalSensorsRequest">
+    <part name="addr" type="xsd:string"/>
+    <part name="timeout" type="xsd:double"/>
+  </message>
+  <message name="rpcExecuteenableInternalSensorsResponse">
+    <part name="return" type="gw:void_Results"/>
+  </message>
+
+  <message name="rpcExecutesampleRequestRequest">
+    <part name="addr" type="xsd:string"/>
+    <part name="timeout" type="xsd:double"/>
+  </message>
+  <message name="rpcExecutesampleRequestResponse">
+    <part name="return" type="gw:void_Results"/>
+  </message>
+
+  <message name="rpcExecuteheartbeatRequestRequest">
+    <part name="addr" type="xsd:string"/>
+    <part name="timeout" type="xsd:double"/>
+    <part name="arg_sendRecordRoute" type="xsd:byte"/>
+    <part name="arg_forceRecordRoute" type="xsd:byte"/>
+  </message>
+  <message name="rpcExecuteheartbeatRequestResponse">
+    <part name="return" type="gw:void_Results"/>
+  </message>
+
+  <message name="rpcExecuteconfigRequestRequest">
+    <part name="addr" type="xsd:string"/>
+    <part name="timeout" type="xsd:double"/>
+  </message>
+  <message name="rpcExecuteconfigRequestResponse">
+    <part name="return" type="gw:void_Results"/>
+  </message>
+
+  <message name="rpcExecuterebootRequest">
+    <part name="addr" type="xsd:string"/>
+    <part name="timeout" type="xsd:double"/>
+  </message>
+  <message name="rpcExecuterebootResponse">
+    <part name="return" type="gw:void_Results"/>
+  </message>
+
+  <message name="rpcExecuteconnectivityTestStartRequest">
+    <part name="addr" type="xsd:string"/>
+    <part name="timeout" type="xsd:double"/>
+    <part name="arg_runId" type="xsd:unsignedShort"/>
+    <part name="arg_testId" type="xsd:unsignedShort"/>
+    <part name="arg_destination" type="xsd:unsignedShort"/>
+    <part name="arg_numPackets" type="xsd:unsignedShort"/>
+    <part name="arg_sendInterval" type="xsd:unsignedShort"/>
+  </message>
+  <message name="rpcExecuteconnectivityTestStartResponse">
+    <part name="return" type="gw:nx_error_t_Results"/>
+  </message>
+
+  <message name="rpcExecutesetOutputValueRequest">
+    <part name="addr" type="xsd:string"/>
+    <part name="timeout" type="xsd:double"/>
+    <part name="arg_port" type="xsd:unsignedByte"/>
+    <part name="arg_value" type="xsd:byte"/>
+  </message>
+  <message name="rpcExecutesetOutputValueResponse">
+    <part name="return" type="gw:void_Results"/>
+  </message>
+
+  <message name="eventsListRequest">
+  </message>
+  <message name="eventsListResponse">
+    <part name="return" type="gw:GW__eventsList_Result"/>
+  </message>
+
+  <message name="eventsReadRequest">
+    <part name="t1" type="xsd:double"/>
+    <part name="t2" type="xsd:double"/>
+    <part name="name" type="xsd:string"/>
+    <part name="addr" type="xsd:string"/>
+    <part name="offset" type="xsd:unsignedInt"/>
+  </message>
+  <message name="eventsReadResponse">
+    <part name="return" type="gw:GW__eventsRead_Result"/>
+  </message>
+
+  <message name="eventsReadRelativeRequest">
+    <part name="t1Offset" type="xsd:double"/>
+    <part name="t2Offset" type="xsd:double"/>
+    <part name="name" type="xsd:string"/>
+    <part name="addr" type="xsd:string"/>
+    <part name="offset" type="xsd:unsignedInt"/>
+    <part name="reqId" type="xsd:string"/>
+  </message>
+  <message name="eventsReadRelativeResponse">
+    <part name="return" type="gw:GW__eventsReadRelative_Result"/>
+  </message>
+
+  <message name="eventsReadLastRequest">
+    <part name="name" type="xsd:string"/>
+    <part name="addr" type="xsd:string"/>
+  </message>
+  <message name="eventsReadLastResponse">
+    <part name="return" type="gw:GW__eventsReadLast_Result"/>
+  </message>
+
+  <message name="eventsClearRequest">
+    <part name="t1" type="xsd:double"/>
+    <part name="t2" type="xsd:double"/>
+    <part name="name" type="xsd:string"/>
+    <part name="addr" type="xsd:string"/>
+  </message>
+  <message name="eventsClearResponse">
+  </message>
+
+  <message name="eventsClearRelativeRequest">
+    <part name="t1Offset" type="xsd:double"/>
+    <part name="t2Offset" type="xsd:double"/>
+    <part name="name" type="xsd:string"/>
+    <part name="addr" type="xsd:string"/>
+  </message>
+  <message name="eventsClearRelativeResponse">
+  </message>
+
+  <message name="metadataPutRequest">
+    <part name="addr" type="xsd:string"/>
+    <part name="name" type="xsd:string"/>
+    <part name="value" type="xsd:string"/>
+  </message>
+  <message name="metadataPutResponse">
+    <part name="return" type="gw:GW__MetaData_Results"/>
+  </message>
+
+  <message name="metadataGetRequest">
+    <part name="addr" type="xsd:string"/>
+    <part name="name" type="xsd:string"/>
+  </message>
+  <message name="metadataGetResponse">
+    <part name="return" type="gw:GW__MetaData_Results"/>
+  </message>
+
+  <message name="metadataRemoveRequest">
+    <part name="addr" type="xsd:string"/>
+    <part name="name" type="xsd:string"/>
+  </message>
+  <message name="metadataRemoveResponse">
+    <part name="return" type="gw:GW__MetaData_Results"/>
+  </message>
+
+  <message name="gwGetStatusRequest">
+  </message>
+  <message name="gwGetStatusResponse">
+    <part name="return" type="gw:GW__gwGetStatus_Result"/>
+  </message>
+
+  <message name="gwGetConfigRequest">
+  </message>
+  <message name="gwGetConfigResponse">
+    <part name="return" type="gw:GW__ConfigOptionList"/>
+  </message>
+
+  <message name="gwRestartRequest">
+    <part name="name" type="xsd:string"/>
+  </message>
+  <message name="gwRestartResponse">
+    <part name="return" type="xsd:string"/>
+  </message>
+
+  <message name="statsListMoteStatsRequest">
+  </message>
+  <message name="statsListMoteStatsResponse">
+    <part name="return" type="gw:GW__MoteStatsList"/>
+  </message>
+
+  <message name="statsReadMoteStatsRequest">
+    <part name="t1" type="xsd:double"/>
+    <part name="t2" type="xsd:double"/>
+    <part name="name" type="xsd:string"/>
+    <part name="addr" type="xsd:string"/>
+    <part name="offset" type="xsd:unsignedInt"/>
+  </message>
+  <message name="statsReadMoteStatsResponse">
+    <part name="return" type="gw:GW__statsReadMoteStats_Result"/>
+  </message>
+
+  <message name="statsReadMoteStatsRelativeRequest">
+    <part name="t1Offset" type="xsd:double"/>
+    <part name="t2Offset" type="xsd:double"/>
+    <part name="name" type="xsd:string"/>
+    <part name="addr" type="xsd:string"/>
+    <part name="offset" type="xsd:unsignedInt"/>
+    <part name="reqId" type="xsd:string"/>
+  </message>
+  <message name="statsReadMoteStatsRelativeResponse">
+    <part name="return" type="gw:GW__statsReadMoteStatsRelative_Result"/>
+  </message>
+
+  <message name="statsClearMoteStatsRequest">
+    <part name="t1" type="xsd:double"/>
+    <part name="t2" type="xsd:double"/>
+    <part name="name" type="xsd:string"/>
+    <part name="addr" type="xsd:string"/>
+  </message>
+  <message name="statsClearMoteStatsResponse">
+  </message>
+
+  <message name="statsClearMoteStatsRelativeRequest">
+    <part name="t1Offset" type="xsd:double"/>
+    <part name="t2Offset" type="xsd:double"/>
+    <part name="name" type="xsd:string"/>
+    <part name="addr" type="xsd:string"/>
+  </message>
+  <message name="statsClearMoteStatsRelativeResponse">
+  </message>
+
+  <message name="addrcacheDumpRequest">
+  </message>
+  <message name="addrcacheDumpResponse">
+     <part name="return" type="gw:GW__AddrCache_Results"/>
+  </message>
+
+  <message name="addrcacheFlushRequest">
+    <part name="addr" type="xsd:string"/>
+  </message>
+  <message name="addrcacheFlushResponse">
+  </message>
+
+  <message name="mgmtPingBridgeRequest">
+    <part name="routerAddr" type="xsd:string"/>
+  </message>
+  <message name="mgmtPingBridgeResponse">
+    <part name="return" type="gw:GW__PingBridge_Results"/>
+  </message>
+
+  <message name="mgmtPingNodeRequest">
+    <part name="addr" type="xsd:string"/>
+    <part name="timeout" type="xsd:double"/>
+  </message>
+  <message name="mgmtPingNodeResponse">
+    <part name="return" type="gw:GW__PingNode_Results"/>
+  </message>
+
+  <message name="mgmtTraceRouteRequest">
+    <part name="addr" type="xsd:string"/>
+  </message>
+  <message name="mgmtTraceRouteResponse">
+    <part name="return" type="gw:GW__TraceRoute_Results"/>
+  </message>
+
+  <message name="mgmtRebuildTreeRequest">
+    <part name="routerAddr" type="xsd:string"/>
+  </message>
+  <message name="mgmtRebuildTreeResponse">
+    <part name="return" type="gw:GW__RebuildTree_Results"/>
+  </message>
+
+  <message name="mgmtDiscoverNodesRequest">
+    <part name="routerAddr" type="xsd:string"/>
+  </message>
+  <message name="mgmtDiscoverNodesResponse">
+    <part name="return" type="gw:GW__DiscoverNodes_Results"/>
+  </message>
+
+  <message name="mgmtListRoutersRequest">
+  </message>
+  <message name="mgmtListRoutersResponse">
+    <part name="return" type="gw:GW__ListRouters_Results"/>
+  </message>
+
+  <message name="archiveListRequest">
+  </message>
+  <message name="archiveListResponse">
+    <part name="return" type="gw:GW__ArchiveList_Results"/>
+  </message>
+
+  <message name="inetDumpRequest">
+  </message>
+  <message name="inetDumpResponse">
+    <part name="return" type="gw:GW__InetDump_Results"/>
+  </message>
+
+  <message name="inetUpdateDnsRequest">
+    <part name="addr" type="xsd:string"/>
+  </message>
+  <message name="inetUpdateDnsResponse">
+  </message>
+
+  <portType name="GWPort">
+
+    <operation name="programmingDevProgram">
+      <input message="gw:programmingDevProgramRequest"/>
+      <output message="gw:programmingDevProgramResponse"/>
+    </operation>
+
+    <operation name="attributesList">
+      <input message="gw:attributesListRequest"/>
+      <output message="gw:attributesListResponse"/>
+    </operation>
+
+    <operation name="attributesGet">
+      <input message="gw:attributesGetRequest"/>
+      <output message="gw:attributesGetResponse"/>
+    </operation>
+
+    <operation name="attributesSet">
+      <input message="gw:attributesSetRequest"/>
+      <output message="gw:attributesSetResponse"/>
+    </operation>
+
+    <operation name="rpcList">
+      <input message="gw:rpcListRequest"/>
+      <output message="gw:rpcListResponse"/>
+    </operation>
+
+    <operation name="rpcExecutegetOutputValue">
+      <input message="gw:rpcExecutegetOutputValueRequest"/>
+      <output message="gw:rpcExecutegetOutputValueResponse"/>
+    </operation>
+
+    <operation name="rpcExecuteenableInternalSensors">
+      <input message="gw:rpcExecuteenableInternalSensorsRequest"/>
+      <output message="gw:rpcExecuteenableInternalSensorsResponse"/>
+    </operation>
+
+    <operation name="rpcExecutesampleRequest">
+      <input message="gw:rpcExecutesampleRequestRequest"/>
+      <output message="gw:rpcExecutesampleRequestResponse"/>
+    </operation>
+
+    <operation name="rpcExecuteheartbeatRequest">
+      <input message="gw:rpcExecuteheartbeatRequestRequest"/>
+      <output message="gw:rpcExecuteheartbeatRequestResponse"/>
+    </operation>
+
+    <operation name="rpcExecuteconfigRequest">
+      <input message="gw:rpcExecuteconfigRequestRequest"/>
+      <output message="gw:rpcExecuteconfigRequestResponse"/>
+    </operation>
+
+    <operation name="rpcExecutereboot">
+      <input message="gw:rpcExecuterebootRequest"/>
+      <output message="gw:rpcExecuterebootResponse"/>
+    </operation>
+
+    <operation name="rpcExecuteconnectivityTestStart">
+      <input message="gw:rpcExecuteconnectivityTestStartRequest"/>
+      <output message="gw:rpcExecuteconnectivityTestStartResponse"/>
+    </operation>
+
+    <operation name="rpcExecutesetOutputValue">
+      <input message="gw:rpcExecutesetOutputValueRequest"/>
+      <output message="gw:rpcExecutesetOutputValueResponse"/>
+    </operation>
+
+    <operation name="eventsList">
+      <input message="gw:eventsListRequest"/>
+      <output message="gw:eventsListResponse"/>
+    </operation>
+
+    <operation name="eventsRead">
+      <input message="gw:eventsReadRequest"/>
+      <output message="gw:eventsReadResponse"/>
+    </operation>
+
+    <operation name="eventsReadRelative">
+      <input message="gw:eventsReadRelativeRequest"/>
+      <output message="gw:eventsReadRelativeResponse"/>
+    </operation>
+
+    <operation name="eventsReadLast">
+      <input message="gw:eventsReadLastRequest"/>
+      <output message="gw:eventsReadLastResponse"/>
+    </operation>
+
+    <operation name="eventsClear">
+      <input message="gw:eventsClearRequest"/>
+      <output message="gw:eventsClearResponse"/>
+    </operation>
+
+    <operation name="eventsClearRelative">
+      <input message="gw:eventsClearRelativeRequest"/>
+      <output message="gw:eventsClearRelativeResponse"/>
+    </operation>
+
+    <operation name="metadataPut">
+      <input message="gw:metadataPutRequest"/>
+      <output message="gw:metadataPutResponse"/>
+    </operation>
+
+    <operation name="metadataGet">
+      <input message="gw:metadataGetRequest"/>
+      <output message="gw:metadataGetResponse"/>
+    </operation>
+
+    <operation name="metadataRemove">
+      <input message="gw:metadataRemoveRequest"/>
+      <output message="gw:metadataRemoveResponse"/>
+    </operation>
+
+    <operation name="gwGetStatus">
+      <input message="gw:gwGetStatusRequest"/>
+      <output message="gw:gwGetStatusResponse"/>
+    </operation>
+
+    <operation name="gwGetConfig">
+      <input message="gw:gwGetConfigRequest"/>
+      <output message="gw:gwGetConfigResponse"/>
+    </operation>
+
+    <operation name="gwRestart">
+      <input message="gw:gwRestartRequest"/>
+      <output message="gw:gwRestartResponse"/>
+    </operation>
+
+    <operation name="statsListMoteStats">
+      <input message="gw:statsListMoteStatsRequest"/>
+      <output message="gw:statsListMoteStatsResponse"/>
+    </operation>
+
+    <operation name="statsReadMoteStats">
+      <input message="gw:statsReadMoteStatsRequest"/>
+      <output message="gw:statsReadMoteStatsResponse"/>
+    </operation>
+
+    <operation name="statsReadMoteStatsRelative">
+      <input message="gw:statsReadMoteStatsRelativeRequest"/>
+      <output message="gw:statsReadMoteStatsRelativeResponse"/>
+    </operation>
+
+    <operation name="statsClearMoteStats">
+      <input message="gw:statsClearMoteStatsRequest"/>
+      <output message="gw:statsClearMoteStatsResponse"/>
+    </operation>
+
+    <operation name="statsClearMoteStatsRelative">
+      <input message="gw:statsClearMoteStatsRelativeRequest"/>
+      <output message="gw:statsClearMoteStatsRelativeResponse"/>
+    </operation>
+
+    <operation name="addrcacheDump">
+      <input message="gw:addrcacheDumpRequest"/>
+      <output message="gw:addrcacheDumpResponse"/>
+    </operation>
+
+    <operation name="addrcacheFlush">
+      <input message="gw:addrcacheFlushRequest"/>
+      <output message="gw:addrcacheFlushResponse"/>
+    </operation>
+
+    <operation name="mgmtPingBridge">
+      <input message="gw:mgmtPingBridgeRequest"/>
+      <output message="gw:mgmtPingBridgeResponse"/>
+    </operation>
+
+    <operation name="mgmtPingNode">
+      <input message="gw:mgmtPingNodeRequest"/>
+      <output message="gw:mgmtPingNodeResponse"/>
+    </operation>
+
+    <operation name="mgmtTraceRoute">
+      <input message="gw:mgmtTraceRouteRequest"/>
+      <output message="gw:mgmtTraceRouteResponse"/>
+    </operation>
+
+    <operation name="mgmtRebuildTree">
+      <input message="gw:mgmtRebuildTreeRequest"/>
+      <output message="gw:mgmtRebuildTreeResponse"/>
+    </operation>
+
+    <operation name="mgmtDiscoverNodes">
+      <input message="gw:mgmtDiscoverNodesRequest"/>
+      <output message="gw:mgmtDiscoverNodesResponse"/>
+    </operation>
+
+    <operation name="mgmtListRouters">
+      <input message="gw:mgmtListRoutersRequest"/>
+      <output message="gw:mgmtListRoutersResponse"/>
+    </operation>
+
+    <operation name="archiveList">
+      <input message="gw:archiveListRequest"/>
+      <output message="gw:archiveListResponse"/>
+    </operation>
+
+    <operation name="inetDump">
+      <input message="gw:inetDumpRequest"/>
+      <output message="gw:inetDumpResponse"/>
+    </operation>
+
+    <operation name="inetUpdateDns">
+      <input message="gw:inetUpdateDnsRequest"/>
+      <output message="gw:inetUpdateDnsResponse"/>
+    </operation>
+
+  </portType>
+
+  <binding name="GWBinding" type="gw:GWPort">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+    <operation name="programmingDevProgram">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="attributesList">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="attributesGet">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="attributesSet">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="rpcList">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="rpcExecutegetOutputValue">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded"
+          namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded"
+          namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="rpcExecuteenableInternalSensors">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded"
+          namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded"
+          namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="rpcExecutesampleRequest">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded"
+          namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded"
+          namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="rpcExecuteheartbeatRequest">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded"
+          namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded"
+          namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="rpcExecuteconfigRequest">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded"
+          namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded"
+          namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="rpcExecutereboot">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded"
+          namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded"
+          namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="rpcExecuteconnectivityTestStart">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded"
+          namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded"
+          namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="rpcExecutesetOutputValue">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded"
+          namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded"
+          namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="eventsList">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="eventsRead">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="eventsReadRelative">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="eventsReadLast">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="eventsClear">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="eventsClearRelative">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="metadataPut">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="metadataGet">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="metadataRemove">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="gwGetStatus">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="gwGetConfig">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="gwRestart">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="statsListMoteStats">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="statsReadMoteStats">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="statsReadMoteStatsRelative">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="statsClearMoteStats">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="statsClearMoteStatsRelative">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="addrcacheDump">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="addrcacheFlush">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="mgmtPingBridge">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="mgmtPingNode">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="mgmtTraceRoute">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="mgmtRebuildTree">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="mgmtDiscoverNodes">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="mgmtListRouters">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="archiveList">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="inetDump">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+    <operation name="inetUpdateDns">
+      <soap:operation soapAction="urn:gwAction"/>
+      <input>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </input>
+      <output>
+        <soap:body use="encoded" namespace="urn:gw"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+      </output>
+    </operation>
+
+  </binding>
+
+  <service name="GWService">
+    <port name="GWPort" binding="gw:GWBinding">
+      <soap:address location="http://192.168.2.3/gw/soap"/>
+    </port>
+  </service>
+
+</definitions>

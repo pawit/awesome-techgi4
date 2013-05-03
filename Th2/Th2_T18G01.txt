@@ -1,0 +1,36 @@
+Maximilian Bachl 341455 Theorieabgabe
+
+Aufgabe 1:
+a) Es gibt hier Accesstransparency weil für Programme der Unterschied zu lokalen Dateien nicht sichtbar ist. Failure-Transparency: Fehler im Netzwerk werden vom Protokoll gehandhabt. Concurrency-Transparency: Verschleiert, dass mehrere User die gleichen Ressourcen benutzen. Location-Transparency: Man kann Volumes (zwar nicht live aber immerhin) verschieben.
+
+b) Vollständige Fehler-Transparency gibt es nicht, denn wenn etwa die Internetverbindung total versagt, so kann dieser Fehler nicht verschleiert werden und muss dem User mitgeteilt werden.
+
+c) Access-Transparency: Der Client weiß nicht, wie die genaue Druckertechnik (ob mit oder ohne Postscript etc.) funktioniert. Concurrency wird versteckt. Fehler im Drucker werden vom Server ebenfalls gehandelt. Hier gibt es aber keine vollständige Transparenz, da man dann zum anderen Drucker laufen muss.
+
+d) Die Fehler-Transparenz etwa ist nicht sinnvoll, weil das Dokument dann an einem anderen Drucker ausgedruckt wird und der User das nicht weiß und verwirrt ist. Somit will er das gleiche Dokument eventuell mehrmals ausdrucken, weil er nicht weiß, dass der Drucker defekt ist.
+
+Aufgabe 2:
+a) Call-by-Value: Der Wert der entsprechenden Variable wird kopiert und übertragen. Wenn die Daten also von der anderen Seite verändert werden, ändert das die Ursprungsdaten nicht. 
+Call-by-Reference: Es wird immer nur ein Verweis auf die eigentlichen Daten übertragen. Somit werden, wenn die Daten geändert werden, diese für alle geändert.
+Call-by-copy-restore: Es werden wie bei Call-by-Value die Daten kopiert, der Unterschied ist aber, dass nach Abschluss der Operation die veränderten Daten zurückkopiert werden, und somit wie bei Call-by-Reference die Daten verändert werden. 
+b) Die größten Probleme gibt es bei Call-by-reference, da der Adressraum des Clients am Server nicht erreichbar ist. Darum wird Call-by-reference durch Call-by-copy-restore emuliert: Die Daten werden kopiert und dem Server gesendet. Dieser führ darauf Operationen durch und danach kopiert der Client die neue Version dahin, wo vorhin die alten Daten waren. 
+c) In erster Linie stand die Location-Transparency im Vordergrund. Denn der Aufrufer muss nicht wissen, wo sich der Code befindet, den er aufruft.
+d) Bei RPC werden einfach nur Funktionen über das Netzwerk aufgerufen. Bei RMI allerdings kann man Referenzen zu entfernten Objekten bekommen und dann Methoden auf die Objekte aufrufen. RMI ist also wesentlich mächtiger als RPC.
+Der Zustand wird bei RMI außerdem am Server gehalten, während es bei RPC nicht so einfach zu betrachten ist. 
+
+Aufgabe 4:
+HTML ist eine SGML-basierte Markup-Sprache um die Struktur und Semantik von Webseiten zu beschreiben. 
+XML ist eine Teilmenge von SGML, da dieses zu komplex für die meisten Anwendungen ist. Es hat allerdings auch neue Features wie Namensräume zusätzlich.
+XHTML ist HTML auf Basis von XML und nicht mehr SGML. XML ist strenger und weniger tolerant als SGML und hat auch weniger Features.
+Dadurch ist XHTML maschinenfreundlicher als HTML, aber im Allgemeinen menschenunfreundlicher. 
+
+Aufgabe 5:
+a) Types beschreibt die Daten in der XML Schema Sprache. 
+Message entspricht normalerweise einer Operation. Jede Message besteht aus mehreren Teilen, die beschreiben, wie die Operation auszuführen ist. In WSDL 2 wurde dieses Feature allerdings abgeschafft, da nun direkt XSD Typen verwendet werden, um den Input zu beschreiben.
+Interface und PortType beschreiben den Web-Service an sich, die Operationen, die er anbietet und die Messages, die dafür benötigt werden.  
+Binding beschreibt das Interface und wie genau SOAP in diesem Zusammenhang genutzt wird. Man kann auch ein Bindings mithilfe von REST und HTTP machen. 
+b) Die Adresse ist "http://192.168.2.3/gw/soap" und sie kann im "Service-Tag" herausgefunden werden.
+c) In welcher Programmiersprache der Web-Service implementiert ist, ist belanglos, genauso, wie man nicht wissen muss, in welcher Programmiersprache der Client implementiert ist, da alles über SOAP abläuft.
+
+Aufgabe 6:
+Ja, ein Web-Service kann auch ohne UDDI-Eintrag angeboten werden und dies macht auch Sinn. Nur müssen in diesem Fall die Clients den Server bereits vorher können und können ihn nicht im Netz nachschlagen.
