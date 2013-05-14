@@ -12,7 +12,7 @@ d) Die Fehler-Transparenz etwa ist nicht sinnvoll, weil das Dokument dann an ein
 Aufgabe 2:
 a) Call-by-Value: Der Wert der entsprechenden Variable wird kopiert und übertragen. Wenn die Daten also von der anderen Seite verändert werden, ändert das die Ursprungsdaten nicht. 
 Call-by-Reference: Es wird immer nur ein Verweis auf die eigentlichen Daten übertragen. Somit werden, wenn die Daten geändert werden, diese für alle geändert.
-Call-by-copy-restore: Es werden wie bei Call-by-Value die Daten kopiert, der Unterschied ist aber, dass nach Abschluss der Operation die veränderten Daten zurückkopiert werden, und somit wie bei Call-by-Reference die Daten verändert werden. 
+Call-by-copy-restore: Es werden wie bei Call-by-Value die Daten kopiert, der Unterschied ist aber, dass nach Abschluss der Operation die veränderten Daten zurückkopiert werden, und somit wie bei Call-by-Reference die Daten verändert werden.
 b) Die größten Probleme gibt es bei Call-by-reference, da der Adressraum des Clients am Server nicht erreichbar ist. Darum wird Call-by-reference durch Call-by-copy-restore emuliert: Die Daten werden kopiert und dem Server gesendet. Dieser führ darauf Operationen durch und danach kopiert der Client die neue Version dahin, wo vorhin die alten Daten waren. 
 c) In erster Linie stand die Location-Transparency im Vordergrund. Denn der Aufrufer muss nicht wissen, wo sich der Code befindet, den er aufruft.
 d) Bei RPC werden einfach nur Funktionen über das Netzwerk aufgerufen. Bei RMI allerdings kann man Referenzen zu entfernten Objekten bekommen und dann Methoden auf die Objekte aufrufen. RMI ist also wesentlich mächtiger als RPC.
