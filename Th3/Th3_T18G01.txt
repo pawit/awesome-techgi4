@@ -21,9 +21,9 @@ tB-tA = t1 + ρ∆t - t1 + ρ∆t ≤ δ
 
 Aufgabe 4
 
-a) Angenommen, das Delay ist immer gleich 1. Am Anfang, wenn C das Paket versendet, sind die Zeiten jeweils C=5, B=16, A=1. Somit hat das Paket den Zeitstempel 5, die aktuelle Zeit bei C. Das Paket braucht insgesamt 2 Zeiteinheiten, und kommt somit zum Zeitpunkt 3 bei A an, obwohl sie laut Zeitstempel erst um 5 gesendet wurde.
+a) Angenommen, das Delay ist immer gleich 1. Wenn nun C am schnellsten geht und A am langsamsten, dann hat das von C versendete Paket den Zeitstempel T. Wenn es nun bei A ankommt, hat A durch die langsamere Uhr eine niedrigere Zeit T' < T. Somit ist das Paket angekommen bevor es versendet wurde.  
 
-b) Ja natürlich kann das in der Praxis auftreten. Man kann den Zeitstempel natürlich einfach ignorieren wenn er nicht so essentiell war, oder den Lamport-Algorithmus anwenden. 
+b) Ja natürlich kann das in der Praxis auftreten. Man kann den Zeitstempel natürlich einfach ignorieren wenn er nicht so essentiell war, oder etwa den Lamport-Algorithmus anwenden. 
 
 c) Nach dem Lamport-Algorithmus würde man die aktuelle Systemzeit einfach so anpassen, dass das Paket doch richtig angekommen wäre. Also wenn das Paket den Zeitstempel s hat, dann würde man die Zeit auf s+1 setzen, also einfach ein klein wenig höher als den Zeitstempel.
 
