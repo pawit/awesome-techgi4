@@ -1,0 +1,48 @@
+Th3-Abgabe von Maximilian Bachl mit Matrikelnummer 341455
+
+Aufgabe 1
+
+Bei vielen realen Anwendungen ist es wichtig zu wissen, in welcher Reihenfolge Ereignisse passiert sind. Wenn mehrere Rechner in einem Netz zusammenarbeiten, kann es zu großen Synchronisationsproblemen kommen, wenn die Uhren der Geräte stark voneinander abweichen.
+
+Der zeitliche Abstand der Uhren muss innerhalb eines ausreichend kleinen Toleranzintervalls liegen, dessen Größe von der Anwendung abhängt.
+
+Aufgabe 2
+
+Angenommen A driftet maximal nach hinten -- ist also zu langsam -- und B maximal nach vorne -- zu schnell.
+Dann haben wir nach ∆t Sekunden folgende Werte:
+
+tA = t1 - ρ·∆t
+tB = t1 + ρ·∆t
+
+tB-tA = t1 + ρ∆t - t1 + ρ∆t ≤ δ
+      = 2ρ∆t ≤ δ
+
+∆t ≤ δ/2ρ
+
+Aufgabe 4
+
+a) Angenommen, das Delay ist immer gleich 1. Wenn nun C am schnellsten geht und A am langsamsten, dann hat das von C versendete Paket den Zeitstempel T. Wenn es nun bei A ankommt, hat A durch die langsamere Uhr eine niedrigere Zeit T' < T. Somit ist das Paket angekommen bevor es versendet wurde.  
+
+b) Ja natürlich kann das in der Praxis auftreten. Man kann den Zeitstempel natürlich einfach ignorieren wenn er nicht so essentiell war, oder etwa den Lamport-Algorithmus anwenden. 
+
+c) Nach dem Lamport-Algorithmus würde man die aktuelle Systemzeit einfach so anpassen, dass das Paket doch richtig angekommen wäre. Also wenn das Paket den Zeitstempel s hat, dann würde man die Zeit auf s+1 setzen, also einfach ein klein wenig höher als den Zeitstempel.
+
+Aufgabe 5
+
+a) Wenn sie innerhalb der 50ms nach T' auftritt. Also T - 50ms > T' bedeutet, dass die Nachricht auf jeden Fall aktuell ist. 
+
+b) Er darf ihn unter Beachtung von a) zum Zeitpunkt 175000+50+100 =  löschen. Wenn man hier nämlich die maximale Drift der Uhren miteinbezieht und noch dazu die maximale Übertragungsverzögerung beachtet, ist der Zeitstempel danach (fast) garantiert irrelevant.
+
+c) Es reicht aus sie intern zu synchronisieren, solange keine anderen Systeme beteiligt sind. Stoßen weitere Rechner dazu, müssen diese wiederum synchronisiert werden.
+
+Aufgabe 6
+
+T1 = 16:34:13.430
+T2 = 16:34:23.480
+T3 = 16:34:25.700
+T4 = 16:34:15.725
+
+Offset = 0.5((T2-T1) + (T3-T4)) = 0.5*(10.050s + 9.975s) = 10.0125s
+
+Wenn die beiden beiden Rechner über das Internet synchronisiert wurden, so beträgt die Genauigkeit ungefähr ±0.1s, über LAN sind es höchstens ±0.001s
+
