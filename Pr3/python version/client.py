@@ -12,7 +12,7 @@ from mosquitto import Mosquitto
 topic = 'techgi4/msgboard'
 debug = False
 
-
+# in clojure: (partial merge-with +)
 def max_clocks(c1, c2):
     new_clock = c1
     for k1 in c1:
@@ -51,21 +51,22 @@ class Client(Mosquitto):
 
     def _on_message(self, mosq, userdata, message):
         # we don't increment when receiving!
-        # Is there anything missing?
+        # very very unsecure :D
         m, i, c = eval(message.payload)
+        # Don't process own messages
         if i == self.client_id:
             return
         if i not in self.vector_clock:
             self.vector_clock[i] = 0
+        # check if there are any messages preceeding this one
         if self.vector_clock[i] + 1 != c[i]:
-            # something fishy, but what is it?
             self.queue.append(message)
             if debug:
                 print('waiting for message...')
         else:
             print("%s: %s" % (i, m))
             self.vector_clock = max_clocks(self.vector_clock, c)
-            # we received a message, are there any messages that follow this message?
+            # we received a message, are there any messages that followed this message?
             # could use a sorted list
             for me in self.queue:
                 for mes in self.queue:
