@@ -31,7 +31,7 @@ Aufgabe 5
 
 a) Wenn sie innerhalb der 50ms nach T' auftritt. Also T - 50ms > T' bedeutet, dass die Nachricht auf jeden Fall aktuell ist. 
 
-b) Er darf ihn unter Beachtung von a) zum Zeitpunkt 175000+50+100 =  löschen. Wenn man hier nämlich die maximale Drift der Uhren miteinbezieht und noch dazu die maximale Übertragungsverzögerung beachtet, ist der Zeitstempel danach (fast) garantiert irrelevant.
+b) Er darf ihn unter Beachtung von a) zum Zeitpunkt 175000+50+100 = 175150 löschen. Wenn man hier nämlich die maximale Drift der Uhren miteinbezieht und noch dazu die maximale Übertragungsverzögerung beachtet, ist der Zeitstempel danach (fast) garantiert irrelevant.
 
 c) Es reicht aus sie intern zu synchronisieren, solange keine anderen Systeme beteiligt sind. Stoßen weitere Rechner dazu, müssen diese wiederum synchronisiert werden.
 
