@@ -1,0 +1,47 @@
+Th3-Abgabe von Maximilian Bachl mit Matrikelnummer 341455
+
+Aufgabe 1
+
+a)
+Write-All: Auf allen Rechnern im Netz sind die Informationen identisch verteilt. Es kann also von einem beliebigen Rechner gelesen werden. Beim Schreiben gibt es aber das Problem. Beim Schreiben müssen die Daten aber zu allen Replikaten gesendet werden, was aufwändig ist. Es gibt also große Effizienz beim Lesen, aber Probleme beim Schreiben. Wenn ein Rechner ausfällt gibt es außerdem das Problem, dass dieser Rechner beim Wiederinbetriebnehmen alle aktuellen Daten bekommen muss.
+
+Primary-Copy: Beim Schreiben gibt es eine "Primärkopie", zu der alle Änderungen übertragen werden, die dann die Synchronisation mit den anderen Kopien regelt. Nachteil: Primärkopie hat großen Netzwerkverkehr.
+
+Voting: Majoritiy: Es muss die Mehrheit der Duplikate gesperrt und modifiziert werden zum Lesen und zum Schreiben. Es kann zu einem Zeitpunkt immer nur eine Transaktion die Mehrheit sperren. Über einen Änderungszähler kann man feststellen, ob ein Replikat aktueller ist als ein anderes. So wird sichergestellt, dass es immer mindestens einen Knoten mit den aktuellen Informationen gibt.
+Weighted: Wenn es v Stimmen gibt, dann benötigt mann w > v/2 Stimmen um zu Schreiben. Außerdem muss zum Lesen gelten: r+w>v
+
+b)
+Je kritischer die Anwendung ist, desto wichtiger ist Strong-Consistency. Wenn etwa Bankdaten verteilt sind. Und der Kunde im einen Datensatz nur noch 0€ hat und im anderen noch 5000€, und der Kunden noch weitere 1000€ abhebt, so muss die Bank ihm in einem Fall Kredit gewähren, obwohl sie das noch gar nicht weiß. Man muss für jede Anwendung entscheiden, ob man sofortige Synchronisation benötigt.
+
+Aufgabe 2
+Wenn r<w ist, dann werden Lesezugriffe bevorzugt, sonst ist es andersrum. w muss auf jeden Fall größer als 5 sein. Ferner muss r+w>v gelten, damit nicht gleichzeitig gelesen und geschrieben werden kann.
+Man kann mit entsprechender Wahl der Parameter r und w alle anderen Verfahren emulieren.
+
+Aufgabe 3
+Abgeändert:
+1) Votes aussenden (n-1) Nachrichten
+2) Bei ja alle Votes zu allen (n-1)*(n-1)
+
+Also (n-1) + (n-1)^2 Nachrichten insgesamt.
+
+Normales Verfahren:
+1) Commit-Req (n-1)
+2) Can-Commit (n-1)
+3) Commit (n-1)
+4) Ack (n-1)
+
+Also 4(n-1) Nachrichten. 
+
+Nachteil: Es werden bei einer großen Anzahl an Teilnehmern enorm viele Nachrichten ausgetauscht.
+Vorteil: Bei weniger als 4 Teilnehmern müssen weniger Nachrichten ausgetauscht werden. Erhält ein Teilnehmer ein Nein und will selber mit Ja antworten, kann er abbrechen, da schon bekannt ist, dass es nicht klappt. 
+Koordinator wird entlastet. 
+Kein Acknowledge.
+
+Aufgabe 5
+Es muss zuverlässige Übertragung geben
+Es muss synchrone Kommunikation sein, da der Ausfall von Nodes mit Timeouts erkannt wird.
+Jeder Prozess kennt diejenigen mit einer höheren ID und kann mit Ihnen kommunizieren.
+
+3 und 5 beginnen mit der Wahl. 3 bekommt von 4, 5, 6 Antworten und wartet auf die Coordinator-Message.
+5 bekommt von 6 eine Nachricht und wartet auf die Coordinator-Message. 
+4, 6 starten eine neue Wahl. 4 erhält eine Antwort von 6 und geht schlafen. 6 bekommt keine Antwort, da es die größte ID hat und sendet die Coordinator-Message an alle anderen Prozesse.
