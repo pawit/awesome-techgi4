@@ -11,17 +11,25 @@ from mosquitto import Mosquitto
 
 topic = 'techgi4/msgboard'
 debug = False
-
-# in clojure: (partial merge-with +)
+# in clojure: (partial merge-with max)
 def max_clocks(c1, c2):
     new_clock = c1
     for k1 in c1:
         if k1 in c2 and c1[k1] >= c2[k1]:
             new_clock[k1] = c1[k1]
     for k2 in c2:
-        if k2 and c2[k2] > c1[k2]:
+        if k2 in c1 and c2[k2] > c1[k2]:
             new_clock[k2] = c2[k2]
     return new_clock
+
+def compare_clocks(c1, c2, id):
+    for k1 in c1:
+        if k1 in c2 and (k1 != id) and c1[k1] < c2[k1]:
+            return False
+    for k2 in c2:
+        if k2 in c1 and (k2 != id) and c1[k2] < c2[k2]:
+            return False
+    return (c1[id] + 1 == c2[id])
 
 
 class Client(Mosquitto):
@@ -59,10 +67,12 @@ class Client(Mosquitto):
         if i not in self.vector_clock:
             self.vector_clock[i] = 0
         # check if there are any messages preceeding this one
-        if self.vector_clock[i] + 1 != c[i]:
+        if not compare_clocks(self.vector_clock, c, i):
             self.queue.append(message)
             if debug:
-                print('waiting for message...')
+                print('waiting for message, vector clocks:')
+                print(self.vector_clock)
+                print(c)
         else:
             print("%s: %s" % (i, m))
             self.vector_clock = max_clocks(self.vector_clock, c)
@@ -71,14 +81,13 @@ class Client(Mosquitto):
             for me in self.queue:
                 for mes in self.queue:
                     m, i, c = eval(mes.payload)
-                    if self.vector_clock[i] + 1 == c[i]:
+                    if compare_clocks(self.vector_clock, c, i):
                         self.vector_clock = max_clocks(self.vector_clock, c)
                         print("%s: %s" % (i, m))
 
-
     def on_stdin(self, message):
         self.vector_clock[self.client_id] += 1
-        self.publish(topic, str([message,self.client_id, self.vector_clock]), 0)
+        self.publish(topic, str([message, self.client_id, self.vector_clock]), 0)
 
 if __name__ == '__main__':
     # register signal handler for strg-c
